@@ -1,0 +1,82 @@
+#include <iostream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+class PhoneBook {
+private:
+    map<string, string> contacts;
+
+public:
+    void addContact() {
+        string name, number;
+        cout << "Enter contact name: ";
+        cin.ignore(); // Ignore any previous newline character in the input buffer
+        getline(cin, name);
+        cout << "Enter phone number: ";
+        getline(cin, number);
+        contacts[name] = number;
+        cout << "Contact added successfully!\n";
+    }
+
+    void viewContacts() const {
+        if (contacts.empty()) {
+            cout << "Phone book is empty.\n";
+        } else {
+            cout << "Contacts in the phone book:\n";
+            for (const auto& contact : contacts) {
+                cout << contact.first << ": " << contact.second << endl;
+            }
+        }
+    }
+
+    void searchContact() const {
+        string name;
+        cout << "Enter contact name to search: ";
+        cin.ignore(); // Ignore any previous newline character in the input buffer
+        getline(cin, name);
+        auto it = contacts.find(name);
+        if (it != contacts.end()) {
+            cout << "Contact found: " << it->first << ": " << it->second << endl;
+        } else {
+            cout << "Contact not found.\n";
+        }
+    }
+};
+
+int main() {
+    PhoneBook phoneBook;
+
+    int choice;
+    do {
+        cout << "\n===== Phone Book Management =====\n";
+        cout << "1. Add Contact\n";
+        cout << "2. View Contacts\n";
+        cout << "3. Search Contact\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                phoneBook.addContact();
+                break;
+            case 2:
+                phoneBook.viewContacts();
+                break;
+            case 3:
+                phoneBook.searchContact();
+                break;
+            case 4:
+                cout << "Exiting the program. Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+                break;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
